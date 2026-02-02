@@ -1,0 +1,30 @@
+id: 02_python
+namespace: zoomcamp
+tasks:
+  - id: collect_stats
+    type: io.kestra.plugin.scripts.python.Commands
+
+    taskRunner:
+      type: io.kestra.plugin.scripts.runner.docker.Docker
+
+    containerImage: python:slim
+
+    inputFiles:
+      main.py: |
+        from kestra import Kestra
+        import requests
+
+        def get_docker_image_downloads(image_name="kestra/kestra"):
+            url = f"https://hub.docker.com/v2/repositories/{image_name}/"
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response.json().get("pull_count")
+
+        Kestra.outputs({
+            "downloads": get_docker_image_downloads()
+        })
+
+    commands:
+      - python -m ensurepip
+      - python -m pip install requests kestra
+      - python main.py
