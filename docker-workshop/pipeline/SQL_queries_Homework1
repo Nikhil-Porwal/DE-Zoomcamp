@@ -1,0 +1,5 @@
+select count(*) from public.green_taxi_trips_2025_11 where lpep_pickup_datetime >= '2025-11-01'and lpep_pickup_datetime <  '2025-12-01' and trip_distance <= 1;
+select lpep_pickup_datetime from public.green_taxi_trips_2025_11 where trip_distance <100 order by trip_distance desc limit 1;
+select z."Zone" from public.green_taxi_trips_2025_11 g join public.taxi_zone_lookup z on g."PULocationID" = z."LocationID" where g.lpep_pickup_datetime >= '2025-11-18' and g.lpep_pickup_datetime <  '2025-11-19' group by z."Zone" order by sum(g.total_amount) desc limit 1;
+select "LocationID" from public.taxi_zone_lookup where "Zone" = 'East Harlem North';
+select z_do."Zone" as dropoff_zone from public.green_taxi_trips_2025_11 g join public.taxi_zone_lookup z_pu on g."PULocationID" = z_pu."LocationID" join public.taxi_zone_lookup z_do on g."DOLocationID" = z_do."LocationID" where z_pu."Zone" = 'East Harlem North' order by g.tip_amount desc limit 1;

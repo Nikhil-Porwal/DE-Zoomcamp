@@ -1,0 +1,19 @@
+{
+  "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+      "path": "E:\\softwares\\Git\\bin\\bash.exe",
+      "args": ["--login", "-i"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.shell.windows": "E:\\softwares\\Git\\bin\\bash.exe",
+  "git.path": "E:\\softwares\\Git\\mingw64\\libexec\\git-core\\git.exe",
+  "git.enabled": true,
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\nikpo\\AppData\\Local\\Programs\\Python\\Python314;C:\\Users\\nikpo\\AppData\\Local\\Programs\\Python\\Python314\\Scripts;E:\\softwares\\Git\\bin;${env:PATH}"
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.terminal.executeInFileDir": true,
+  "python.terminal.executeInTerminal": true
+  
+}
