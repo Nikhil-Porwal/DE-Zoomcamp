@@ -1,0 +1,47 @@
+# --------------------
+# Python
+# --------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# --------------------
+# OS / Editor files
+# --------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --------------------
+# Credentials / Secrets
+# --------------------
+*.json
+*.key
+*.env
+
+# --------------------
+# Data files (large)
+# --------------------
+*.parquet
+*.csv
+*.avro
+*.gz
+
+# --------------------
+# Logs
+# --------------------
+*.log
+# --------------------
+# UV / Poetry
+# --------------------
+.uv/
