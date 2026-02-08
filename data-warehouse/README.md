@@ -187,10 +187,15 @@ Clustering should only be applied when it aligns with query patterns. Over-clust
 ```sql
 SELECT COUNT(*) 
 FROM `zoomcamp.yellow_tripdata_materialized`;
+```
 
+**Observation:**
+- **Data Processed:** `0 B`
+- **Reason:** BigQuery uses **metadata** for `COUNT(*)` queries without scanning actual data
 
-Observation
+This demonstrates BigQuery's intelligent query optimization! 🎯
 
+<<<<<<< HEAD
 - 0B
 - Reason: because BigQuery uses metadata for COUNT() query.
 
@@ -198,3 +203,4 @@ Observation
 🔗 Repository
 
 Homework solutions and scripts available in this repository.
+=======
