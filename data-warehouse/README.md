@@ -195,7 +195,6 @@ FROM `zoomcamp.yellow_tripdata_materialized`;
 
 This demonstrates BigQuery's intelligent query optimization! 🎯
 
-<<<<<<< HEAD
 - 0B
 - Reason: because BigQuery uses metadata for COUNT() query.
 
