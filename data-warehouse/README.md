@@ -1,4 +1,4 @@
-Module 3 Homework – Data Warehousing & BigQuery
+#Module 3 Homework – Data Warehousing & BigQuery
 
 This repository contains my solutions for Module 3 – Data Warehousing & BigQuery of the Data Engineering Zoomcamp 2026.
 
