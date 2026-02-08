@@ -1,150 +1,190 @@
-Module 3 Homework – Data Warehousing & BigQuery
+# 📊 Module 3 Homework – Data Warehousing & BigQuery
 
-This repository contains my solutions for Module 3 – Data Warehousing & BigQuery of the Data Engineering Zoomcamp 2026.
+> **Data Engineering Zoomcamp 2026** | Module 3 Solutions
 
-The goal of this homework is to practice working with:
+This repository contains comprehensive solutions for Module 3 of the Data Engineering Zoomcamp 2026, focusing on advanced BigQuery concepts and data warehousing best practices.
 
-Google Cloud Storage (GCS)
+---
 
-BigQuery External Tables
+## 📂 Dataset Information
 
-Materialized (regular) Tables
+**Source:** Yellow Taxi Trip Records  
+**Period:** January 2024 – June 2024  
+**Format:** Parquet
 
-Partitioning & Clustering
-
-Query optimization and cost awareness
-
-📂 Dataset
-
-Yellow Taxi Trip Records (January 2024 – June 2024)
-
-Files uploaded to GCS:
-
+### GCS Location
+```
 gs://nik-de-zoomcamp-kestra/yellow_tripdata_2024-*.parquet
+```
 
-🧱 BigQuery Setup
-Create External Table
+**Total Records:** 20,332,093
+
+---
+
+## 🏗️ BigQuery Setup
+
+### Create External Table
+
+```sql
 CREATE OR REPLACE EXTERNAL TABLE `zoomcamp.external_yellow_tripdata`
 OPTIONS(
   FORMAT = 'PARQUET',
   uris = ['gs://nik-de-zoomcamp-kestra/yellow_tripdata_2024-*.parquet']
 );
+```
 
-Create Materialized (Regular) Table
+### Create Materialized Table
+
+```sql
 CREATE OR REPLACE TABLE `zoomcamp.yellow_tripdata_materialized` AS
 SELECT *
 FROM `zoomcamp.external_yellow_tripdata`;
+```
 
-✅ Question 1 – Counting Records
+---
 
-Query
+## 📝 Questions & Solutions
 
+### **Question 1** – Counting Records
+
+**Task:** Count total records in the materialized table
+
+```sql
 SELECT COUNT(*) 
 FROM `zoomcamp.yellow_tripdata_materialized`;
+```
 
+**Answer:** `20,332,093` ✅
 
-Answer
+---
 
-✅ 20,332,093
+### **Question 2** – Data Read Estimation
 
-✅ Question 2 – Data Read Estimation
+**Task:** Compare data processing between External and Materialized tables
 
-Query (External Table)
-
+**External Table Query:**
+```sql
 SELECT COUNT(DISTINCT(PULocationID))
 FROM `zoomcamp.external_yellow_tripdata`;
+```
 
-
-Query (Materialized Table)
-
+**Materialized Table Query:**
+```sql
 SELECT COUNT(DISTINCT(PULocationID))
 FROM `zoomcamp.yellow_tripdata_materialized`;
+```
 
+**Answer:**
+- External Table: `0 MB` (estimation not available)
+- Materialized Table: `155.12 MB`
 
-Answer
+✅ **Correct**
 
-✅ 0 MB for the External Table and 155.12 MB for the Materialized Table
+---
 
-✅ Question 3 – Understanding Columnar Storage
+### **Question 3** – Understanding Columnar Storage
 
-Query 1
+**Task:** Explain data scanning behavior
 
+**Query 1 (Single Column):**
+```sql
 SELECT PULocationID
 FROM `zoomcamp.yellow_tripdata_materialized`;
+```
 
-
-Query 2
-
+**Query 2 (Two Columns):**
+```sql
 SELECT PULocationID, DOLocationID
 FROM `zoomcamp.yellow_tripdata_materialized`;
+```
 
+**Answer:** ✅
 
-Answer
+BigQuery uses **columnar storage**, which means it only scans the specific columns requested in the query. Querying two columns requires reading more data than querying a single column, resulting in higher data processing costs.
 
-✅ BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns requires reading more data than querying one column.
+---
 
-✅ Question 4 – Counting Zero Fare Trips
+### **Question 4** – Counting Zero Fare Trips
+
+**Task:** Find trips with zero fare amount
+
+```sql
 SELECT COUNT(*) 
 FROM `zoomcamp.yellow_tripdata_materialized`
 WHERE fare_amount = 0;
+```
 
+**Answer:** `8,333` ✅
 
-Answer
+---
 
-✅ 8333
+### **Question 5** – Partitioning and Clustering Strategy
 
-✅ Question 5 – Partitioning and Clustering Strategy
+**Task:** Create an optimized table structure
 
-Create Optimized Table
-
+```sql
 CREATE OR REPLACE TABLE `zoomcamp.yellow_tripdata_2024_partitioned_clustered`
 PARTITION BY DATE(tpep_dropoff_datetime)
 CLUSTER BY VendorID AS
 SELECT *
 FROM `zoomcamp.external_yellow_tripdata`;
+```
 
+**Answer:** ✅
+- **Partition by:** `tpep_dropoff_datetime` (date-based)
+- **Cluster on:** `VendorID` (frequently filtered field)
 
-Answer
+---
 
-✅ Partition by tpep_dropoff_datetime and Cluster on VendorID
+### **Question 6** – Partition Benefits
 
-✅ Question 6 – Partition Benefits
+**Task:** Compare query performance with and without partitioning
 
-Query on Materialized Table
-
+**Non-Partitioned Query:**
+```sql
 SELECT DISTINCT(VendorID) 
 FROM `zoomcamp.yellow_tripdata_materialized`
-WHERE DATE(tpep_dropoff_datetime) 
-BETWEEN '2024-03-01' AND '2024-03-15';
+WHERE DATE(tpep_dropoff_datetime) BETWEEN '2024-03-01' AND '2024-03-15';
+```
 
-
-Query on Partitioned & Clustered Table
-
+**Partitioned & Clustered Query:**
+```sql
 SELECT DISTINCT(VendorID) 
 FROM `zoomcamp.yellow_tripdata_2024_partitioned_clustered`
-WHERE DATE(tpep_dropoff_datetime) 
-BETWEEN '2024-03-01' AND '2024-03-15';
+WHERE DATE(tpep_dropoff_datetime) BETWEEN '2024-03-01' AND '2024-03-15';
+```
 
+**Answer:** ✅
+- Non-Partitioned: `310.24 MB`
+- Partitioned: `26.84 MB`
 
-Answer
+---
 
-✅ 310.24 MB for non-partitioned table and 26.84 MB for the partitioned table
+### **Question 7** – External Table Storage
 
-✅ Question 7 – External Table Storage
+**Task:** Where is external table data physically stored?
 
-Answer
+**Answer:** ✅ **GCP Bucket**
 
-✅ GCP Bucket
+External tables reference data in Google Cloud Storage without copying it into BigQuery's internal storage.
 
-✅ Question 8 – Clustering Best Practices
+---
 
-Answer
+### **Question 8** – Clustering Best Practices
 
-✅ False
+**Task:** Should you always cluster tables?
 
-Clustering should be applied only when it aligns with query patterns.
+**Answer:** ✅ **False**
 
-✅ Question 9 – Understanding Table Scans
+Clustering should only be applied when it aligns with query patterns. Over-clustering can add unnecessary overhead without performance benefits.
+
+---
+
+### **Question 9** – Understanding Table Scans
+
+**Task:** Analyze metadata optimization
+
+```sql
 SELECT COUNT(*) 
 FROM `zoomcamp.yellow_tripdata_materialized`;
 
