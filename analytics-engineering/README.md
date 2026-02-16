@@ -142,7 +142,7 @@ SELECT COUNT(*)
 FROM `de-zoomcamp-nikhilporwal.dbt_nikhilporwal.stg_fhv_tripdata`;
 ```
 
-**Answer:** ✔ 
+**Answer:** ✔ 43,244,693
 
 ---
 
