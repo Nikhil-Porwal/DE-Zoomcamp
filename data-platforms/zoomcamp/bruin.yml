@@ -1,8 +1,0 @@
-default_envoirment: default
-envoirments:
-  default:
-    connection:
-      duckdb:
-        -name: duckdb-default
-        path: duckdb.db
-        
