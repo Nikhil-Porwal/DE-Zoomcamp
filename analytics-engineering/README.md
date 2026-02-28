@@ -45,9 +45,8 @@ models/
 dbt run --select int_trips_unioned
 ```
 
-**Answer:** ✔ `stg_green_tripdata`, `stg_yellow_tripdata`, and `int_trips_unioned`
+**Answer:** ✔ `int_trips_unioned only`
 
-**Reason:** dbt always builds upstream dependencies automatically.
 
 ---
 
@@ -65,7 +64,7 @@ SELECT COUNT(*)
 FROM `de-zoomcamp-nikhilporwal.dbt_nikhilporwal.fct_monthly_zone_revenue`;
 ```
 
-**option:** ➡ 12,998
+**option:** ➡ 12,184
 
 ---
 
@@ -96,7 +95,7 @@ WHERE service_type = 'Green'
   AND EXTRACT(MONTH FROM revenue_month) = 10;
 ```
 
-**option:** ➡ 421,509
+**option:** ➡ 384,624
 
 ---
 
