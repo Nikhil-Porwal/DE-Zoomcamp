@@ -1,4 +1,4 @@
-# Module 5 Homework: Data Platforms with Bruin — Solutions (Corrected)
+# Module 5 Homework: Data Platforms with Bruin
 
 ## Setup
 
