@@ -1,4 +1,4 @@
-# Module 5 Homework: Data Platforms with Bruin — Solutions
+# Module 5 Homework: Data Platforms with Bruin — Solutions (Corrected)
 
 ## Setup
 
@@ -19,9 +19,24 @@ bruin run
 
 ### Question 1. Bruin Pipeline Structure
 
-**Answer: `.bruin.yml` and `pipeline.yml` (assets can be anywhere)**
+**Answer: `.bruin.yml` and `pipeline/` with `pipeline.yml` and `assets/`**
 
-A Bruin project requires a `.bruin.yml` file at the root (for environment/connection config) and a `pipeline.yml` file to define the pipeline. Asset files can live in any directory within the project.
+A valid Bruin project requires:
+
+- `.bruin.yml` at the project root (environment and connection configuration)
+- A `pipeline/` directory
+  - `pipeline.yml` (pipeline definition)
+  - `assets/` directory containing SQL, Python, or YAML assets
+
+Typical structure:
+
+```
+my-project/
+├── .bruin.yml
+└── pipeline/
+    ├── pipeline.yml
+    └── assets/
+```
 
 ---
 
@@ -29,7 +44,8 @@ A Bruin project requires a `.bruin.yml` file at the root (for environment/connec
 
 **Answer: `time_interval` — incremental based on a time column**
 
-The `time_interval` strategy is designed for processing data over a specific time window. It deletes existing rows for the given interval and re-inserts the freshly processed data, making it ideal for NYC taxi data partitioned by `pickup_datetime`.
+The `time_interval` strategy processes data over a defined time window.  
+It replaces data for the specified interval, making it ideal for taxi data partitioned by `pickup_datetime`.
 
 ---
 
@@ -37,7 +53,7 @@ The `time_interval` strategy is designed for processing data over a specific tim
 
 **Answer: `bruin run --var 'taxi_types=["yellow"]'`**
 
-Array variables must be passed as JSON-formatted strings. The correct syntax uses `--var` with a JSON array value:
+Array variables must be passed as JSON-formatted strings:
 
 ```bash
 bruin run --var 'taxi_types=["yellow"]'
@@ -49,7 +65,7 @@ bruin run --var 'taxi_types=["yellow"]'
 
 **Answer: `bruin run --select ingestion.trips+`**
 
-The `+` suffix after an asset name tells Bruin to run that asset and all downstream assets that depend on it. The `--select` flag accepts dot-notation asset names.
+The `+` suffix runs the selected asset and all downstream dependencies:
 
 ```bash
 bruin run --select ingestion.trips+
@@ -61,7 +77,7 @@ bruin run --select ingestion.trips+
 
 **Answer: `name: not_null`**
 
-To ensure a column never contains NULL values, add a `not_null` quality check to the asset definition:
+To prevent NULL values:
 
 ```yaml
 columns:
@@ -76,7 +92,7 @@ columns:
 
 **Answer: `bruin lineage`**
 
-The `bruin lineage` command visualizes the dependency graph between assets, showing how data flows through the pipeline from ingestion to reporting.
+Visualize the dependency graph:
 
 ```bash
 bruin lineage
@@ -88,10 +104,11 @@ bruin lineage
 
 **Answer: `--full-refresh`**
 
-When running a pipeline for the first time against a new DuckDB database, use `--full-refresh` to ensure all tables are created from scratch, bypassing any incremental logic.
+When running a pipeline for the first time with incremental materialization:
 
 ```bash
 bruin run --full-refresh
 ```
 
 ---
+
