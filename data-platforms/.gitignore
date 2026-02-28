@@ -1,0 +1,45 @@
+.vscode
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env
+.env.*
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.egg
+*.egg-info/
+*.eggs/
+
+dist/
+build/
+
+# Bruin / DLT tooling
+duckdb.db
+*.db
+*.parquet
+/.azure
+/.bruin
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+.tmp
+
+# IDE files
+.vscode/
+.idea/
+
+# Ignore local requirements or environment
+pip-wheel-metadata/
+*.egg-info
+
