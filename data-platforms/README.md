@@ -12,7 +12,8 @@ bruin init zoomcamp my-pipeline
 # Configure .bruin.yml with a DuckDB connection, then run
 bruin run
 ```
-
+## Note:
+bruin.yml and duckdb.db files are not pushed in the repo.
 ---
 
 ## Solutions
