@@ -8,9 +8,9 @@ depends:
 
 materialization:
   type: table
-  strategy: time_interval
-  incremental_key: pickup_datetime
-  time_granularity: timestamp
+  strategy: create+replace
+  # incremental_key: pickup_datetime
+  # time_granularity: timestamp
 
 columns:
   - name: vendor_id
