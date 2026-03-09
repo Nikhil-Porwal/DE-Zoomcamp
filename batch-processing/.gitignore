@@ -1,6 +1,6 @@
 .venv
 .ipynb_checkpoints
-data
+data/
 wget-log
 logs
 .vscode
@@ -22,3 +22,12 @@ htmlcov/
 
 # Logs
 *.log
+
+# Data files
+*.csv
+*.csv.gz
+*.parquet
+*.json
+*.jsonl
+*.avro
+*.orc
