@@ -31,3 +31,6 @@ htmlcov/
 *.jsonl
 *.avro
 *.orc
+tmp/
+hw_data/
+zones/
