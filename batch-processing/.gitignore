@@ -1,0 +1,36 @@
+.venv
+.ipynb_checkpoints
+data/
+wget-log
+logs
+.vscode
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+
+# Tool caches and test artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Data files
+*.csv
+*.csv.gz
+*.parquet
+*.json
+*.jsonl
+*.avro
+*.orc
+tmp/
+hw_data/
+zones/
